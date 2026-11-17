@@ -1,6 +1,6 @@
 {
   "name": "@tanchu/eslint-config",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Общий ESLint-конфиг проектов tanchu: Next.js + React + TypeScript + Tailwind CSS v4, доступность (WCAG 2.2 AA), совместимость с browserslist.",
   "type": "module",
   "exports": {
@@ -17,7 +17,14 @@
     "url": "git+https://github.com/tanchu/dev-standards.git",
     "directory": "packages/eslint-config"
   },
-  "keywords": ["eslint", "eslintconfig", "nextjs", "react", "tailwindcss", "typescript"],
+  "keywords": [
+    "eslint",
+    "eslintconfig",
+    "nextjs",
+    "react",
+    "tailwindcss",
+    "typescript"
+  ],
   "publishConfig": {
     "access": "public",
     "provenance": true
