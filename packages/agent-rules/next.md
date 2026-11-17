@@ -10,6 +10,29 @@ Playwright, pnpm. Общие конфиги — пакеты `@tanchu/eslint-con
 `@tanchu/tsconfig`; общий CI — `tanchu/dev-standards/.github/workflows/next-ci.yml`.
 Сервер, порты, домены и деплой — приватный репозиторий `tanchu/infra`.
 
+## Официальные правила и скиллы вендоров
+
+Правила вендоров не копируем сюда — подключаем как живые источники, они обновляются сами.
+Если наши правила с ними расходятся, прав этот файл и `AGENTS.md` проекта.
+
+- **Next.js — документация в пакете** (Vercel). С Next 16.3 полная документация лежит в
+  `node_modules/next/dist/docs/`, а `next dev` ведёт блок `<!-- BEGIN:nextjs-agent-rules -->`
+  в `AGENTS.md`. Блок не удаляй и не переноси внутрь него свои правила (его перезаписывают).
+  Перед кодом с API Next (кэш, маршруты, `next.config`, серверные функции) прочитай
+  соответствующий раздел этих docs: они про установленную версию, а не про ту, что в памяти.
+- **Modern Web Guidance** (Google Chrome, вместе с Firefox, Edge и MDN). Перед UI, CSS-раскладкой
+  и анимацией, формами, диалогами и поповерами, датами, производительностью и доступностью —
+  `search` → `retrieve` нужного руководства и следуй ему с учётом нашего browserslist.
+  Плагин Claude Code: `modern-web-guidance@claude-plugins-official`.
+- **Vercel agent-skills**: `react-best-practices` (производительность React и Next:
+  водопады запросов, бандл, рендер — перед оптимизацией и ревью) и `web-design-guidelines`
+  (ревью UI: доступность, формы, анимации, картинки — перед тем как сдать страницу).
+  Установка: `npx skills add https://github.com/vercel-labs/agent-skills` или плагин Vercel
+  для Claude Code.
+- **Cloudflare skills** — только если проект использует Workers, R2, KV и т. п.
+  (`npx skills add https://github.com/cloudflare/skills`). Для сайтов за Cloudflare как CDN
+  достаточно `tanchu/infra`.
+
 ## Версии пакетов
 
 Ставь последнюю совместимую версию (`npm view pkg version` перед установкой), а не версию
