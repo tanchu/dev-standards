@@ -1,0 +1,23 @@
+{
+  "name": "@tanchu/tsconfig",
+  "version": "0.1.0",
+  "description": "Общие настройки TypeScript для проектов tanchu на Next.js.",
+  "files": [
+    "next.json",
+    "README.md"
+  ],
+  "exports": {
+    "./next.json": "./next.json"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanchu/dev-standards.git",
+    "directory": "packages/tsconfig"
+  },
+  "keywords": ["tsconfig", "typescript", "nextjs"],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

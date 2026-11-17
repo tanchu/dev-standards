@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-laptop: 60rem;
+}
+
+.fx-reveal {
+  opacity: 0;
+}

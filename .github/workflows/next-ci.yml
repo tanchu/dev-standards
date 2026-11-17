@@ -1,0 +1,94 @@
+name: Next.js CI
+
+# Общие проверки проекта на Next.js. Вызывается из проекта:
+#
+#   jobs:
+#     ci:
+#       uses: tanchu/dev-standards/.github/workflows/next-ci.yml@main
+#       secrets: inherit
+#       with:
+#         env: |
+#           PAYLOAD_SECRET=ci-only-secret
+#
+# Каждый шаг — скрипт из package.json проекта; если скрипта нет, шаг пропускается:
+# lint (ESLint), lint:css (stylelint), typecheck, knip, test:unit, build, test:e2e.
+# Проект вызывает этот workflow на PR и перед выпуском (deploy/release), но не на push в main.
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        description: Версия Node.js.
+        type: string
+        default: '24'
+      env:
+        description: Переменные окружения для всех шагов, строки KEY=value (только не секретные; секреты — через secrets inherit).
+        type: string
+        default: ''
+      e2e:
+        description: Запускать test:e2e (Playwright, Chromium).
+        type: boolean
+        default: true
+
+permissions: {}
+
+jobs:
+  checks:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: Lint, scripts: 'lint lint:css' }
+          - { name: Typecheck, scripts: 'typecheck' }
+          - { name: Knip, scripts: 'knip' }
+          - { name: Unit tests, scripts: 'test:unit' }
+          - { name: Build, scripts: 'build' }
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v5
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115  # v6.1.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1  # v7.1.0
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: pnpm
+      - name: Project env
+        if: inputs.env != ''
+        env:
+          PROJECT_ENV: ${{ inputs.env }}
+        run: printf '%s\n' "$PROJECT_ENV" >> "$GITHUB_ENV"
+      - run: pnpm install --frozen-lockfile
+      - name: ${{ matrix.scripts }}
+        env:
+          SCRIPTS: ${{ matrix.scripts }}
+        run: |
+          for script in $SCRIPTS; do
+            pnpm run --if-present "$script"
+          done
+
+  e2e:
+    name: E2E Tests
+    if: inputs.e2e
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v5
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115  # v6.1.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1  # v7.1.0
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: pnpm
+      - name: Project env
+        if: inputs.env != ''
+        env:
+          PROJECT_ENV: ${{ inputs.env }}
+        run: printf '%s\n' "$PROJECT_ENV" >> "$GITHUB_ENV"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install chromium --with-deps
+      - run: pnpm run --if-present test:e2e
+        env:
+          CI: true

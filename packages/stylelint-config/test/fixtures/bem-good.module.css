@@ -1,0 +1,15 @@
+.fab {
+  position: fixed;
+}
+
+.fab__icon {
+  inline-size: 1.5rem;
+}
+
+.fab--open .fab__icon {
+  rotate: 45deg;
+}
+
+:global(.js) .fab {
+  opacity: 1;
+}

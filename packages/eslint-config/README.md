@@ -1,0 +1,52 @@
+# @tanchu/eslint-config
+
+Общий ESLint-конфиг проектов на **Next.js + React + TypeScript**, по желанию с **Tailwind CSS v4**.
+
+Что внутри:
+
+- **Форматирование** (`@stylistic`): 2 пробела, одинарные кавычки, `;`, JSX по строкам, 120 символов.
+- **TypeScript** (`typescript-eslint`), импорты (`import-x`: порядок, циклы, дубли), Next.js (`core-web-vitals`).
+- **React** (`@eslint-react` strict): пропущенные зависимости эффекта — ошибка; React-типы только напрямую (`ReactNode`, не `React.ReactNode`).
+- **Доступность**: строгий `jsx-a11y` (WCAG 2.2 AA).
+- **Совместимость с браузерами** (`eslint-plugin-compat`): API, которых нет в `browserslist` проекта.
+- **Tailwind CSS v4** (`better-tailwindcss`), если включён:
+  - классы только из шкалы: `gap-y-15`, а не `gap-y-[60px]` (исправляется `eslint --fix`);
+  - брейкпоинты только в rem — именованные из `@theme` или `min-[NNrem]:`. Брейкпоинты в px запрещены: Tailwind сортирует px и rem не по значению, и `sm:grid-cols-2` перебивает соседний `min-[960px]:grid-cols-3` ([tailwindlabs/tailwindcss#20032](https://github.com/tailwindlabs/tailwindcss/issues/20032));
+  - размер шрифта только чётный: `text-[12px]`, не `text-[13px]`;
+  - проверяются не только `className` и `cn(…)`, но и константы `*_CLASS`, `*_CLASSES`, `*_SIZE`, `*_COLOR`, `*_STYLE(S)`, включая значения объектов-словарей.
+- Компонент длиннее 300 строк — предупреждение.
+
+## Установка
+
+```bash
+pnpm add -D @tanchu/eslint-config eslint typescript
+```
+
+Плагины ESLint — зависимости пакета, отдельно их ставить не нужно.
+
+`eslint.config.mjs`:
+
+```js
+import { defineNextConfig } from '@tanchu/eslint-config';
+
+export default defineNextConfig({
+  tsconfigRootDir: import.meta.dirname,
+  // Проект на Tailwind CSS v4; без Tailwind — не указывай (или false).
+  tailwind: {
+    entryPoint: 'src/app/globals.css',
+    // Собственные классы из CSS, которых нет в Tailwind (регулярки).
+    ignoreUnknown: ['^mm-'],
+  },
+  // Проект с Payload CMS: не проверять сгенерированные файлы.
+  payload: true,
+  ignores: ['docs/**'],
+  // Свои блоки конфига проекта — добавятся в конец.
+  extend: [],
+});
+```
+
+## Обновления
+
+Правила меняются только новой версией пакета (changelog — в GitHub Releases репозитория).
+Dependabot в каждом проекте открывает PR с обновлением, CI в нём показывает, что новые
+правила нашли. Большая часть исправляется `pnpm exec eslint --fix`.

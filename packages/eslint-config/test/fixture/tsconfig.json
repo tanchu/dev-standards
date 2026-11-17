@@ -1,0 +1,5 @@
+{
+  "extends": "../../../tsconfig/next.json",
+  "compilerOptions": { "paths": { "@/*": ["./src/*"] } },
+  "include": ["**/*.ts", "**/*.tsx"]
+}
