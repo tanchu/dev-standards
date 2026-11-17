@@ -53,6 +53,11 @@ export function tailwindRules({ ignoreUnknown = [], restrict = [] } = {}) {
           pattern: '^(?:.*:)?text-\\[\\d*[13579]px\\]$',
           message: 'Нечётный размер шрифта: только чётные (10, 12, 14, 16…) — см. README @tanchu/eslint-config.',
         },
+        {
+          // Цвет прямо в классе (`bg-[#384c3c]`, `text-[rgb(0_0_0)]`): только токены `@theme` в OKLCH.
+          pattern: '\\[(?:color:)?(?:#[0-9a-fA-F]{3,8}|(?:rgba?|hsla?|hwb|lab|lch|oklab)\\()',
+          message: 'Цвет прямо в классе: заведи токен в @theme (OKLCH) и используй его — см. README @tanchu/eslint-config.',
+        },
         ...restrict,
       ],
     }],

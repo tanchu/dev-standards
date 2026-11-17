@@ -13,6 +13,7 @@
   - классы только из шкалы: `gap-y-15`, а не `gap-y-[60px]` (исправляется `eslint --fix`);
   - брейкпоинты только в rem — именованные из `@theme` или `min-[NNrem]:`. Брейкпоинты в px запрещены: Tailwind сортирует px и rem не по значению, и `sm:grid-cols-2` перебивает соседний `min-[960px]:grid-cols-3` ([tailwindlabs/tailwindcss#20032](https://github.com/tailwindlabs/tailwindcss/issues/20032));
   - размер шрифта только чётный: `text-[12px]`, не `text-[13px]`;
+  - цвета только токенами `@theme` (в OKLCH), не прямо в классе: `bg-accent`, не `bg-[#384c3c]`;
   - проверяются не только `className` и `cn(…)`, но и константы `*_CLASS`, `*_CLASSES`, `*_SIZE`, `*_COLOR`, `*_STYLE(S)`, включая значения объектов-словарей.
 - Компонент длиннее 300 строк — предупреждение.
 

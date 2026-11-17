@@ -9,6 +9,7 @@ TypeScript, общий CI и правила разработки для аген
 | ESLint (Next, React, TS, Tailwind v4, a11y, browserslist) | [`@tanchu/eslint-config`](packages/eslint-config) | `defineNextConfig({...})` в `eslint.config.mjs` |
 | stylelint (Tailwind v4 или BEM) | [`@tanchu/stylelint-config`](packages/stylelint-config) | `extends: ['@tanchu/stylelint-config/tailwind']` |
 | TypeScript | [`@tanchu/tsconfig`](packages/tsconfig) | `"extends": "@tanchu/tsconfig/next.json"` |
+| Поддерживаемые браузеры | [`@tanchu/browserslist-config`](packages/browserslist-config) | `"browserslist": ["extends @tanchu/browserslist-config"]` |
 | Правила для агентов | [`@tanchu/agent-rules`](packages/agent-rules) | `@node_modules/@tanchu/agent-rules/next.md` в `CLAUDE.md` |
 | CI проекта на Next | [`next-ci.yml`](.github/workflows/next-ci.yml) | `uses: tanchu/dev-standards/.github/workflows/next-ci.yml@main` |
 

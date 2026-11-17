@@ -1,0 +1,29 @@
+{
+  "name": "@tanchu/browserslist-config",
+  "version": "0.1.0",
+  "description": "Общий список поддерживаемых браузеров проектов tanchu: минимум Tailwind CSS v4, с мобильными версиями.",
+  "type": "commonjs",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanchu/dev-standards.git",
+    "directory": "packages/browserslist-config"
+  },
+  "keywords": ["browserslist", "browserslist-config"],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "browserslist": "^4.28.1",
+    "caniuse-lite": "^1.0.30001826"
+  }
+}

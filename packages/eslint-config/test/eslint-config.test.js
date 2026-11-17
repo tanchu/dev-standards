@@ -27,6 +27,7 @@ test('ловит нарушения правил стека', async () => {
   assert.ok(has('better-tailwindcss/enforce-canonical-classes', 'max-w-300'), 'max-w-[1200px] → max-w-300');
   assert.ok(has('better-tailwindcss/no-restricted-classes', 'Нечётный размер шрифта'), 'text-[13px]');
   assert.ok(has('better-tailwindcss/no-restricted-classes', 'Брейкпоинт в px'), 'max-[959px]:');
+  assert.ok(has('better-tailwindcss/no-restricted-classes', 'Цвет прямо в классе'), 'bg-[#384c3c]');
   assert.ok(has('no-restricted-syntax', 'React.X'), 'React.ReactNode');
   assert.ok(has('jsx-a11y/alt-text'), '<img> без alt');
   assert.ok(!has('better-tailwindcss/no-unknown-classes'), 'fx-reveal разрешён через ignoreUnknown');

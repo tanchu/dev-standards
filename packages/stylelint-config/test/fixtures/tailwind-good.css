@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --color-accent: #384c3c;
+  --color-accent: oklch(39.45% 0.0367 150.51);
+  --color-overlay: oklch(0% 0 0 / 30%);
   --breakpoint-laptop: 60rem;
 }
 
@@ -11,5 +12,15 @@
 
 .reveal {
   margin-top: --spacing(4);
+  border: 1px solid color-mix(in oklch, var(--color-accent) 40%, transparent);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
   color: var(--color-accent);
+}
+
+@media (width >= 60rem) {
+  .reveal {
+    padding-inline: 2rem;
+  }
 }

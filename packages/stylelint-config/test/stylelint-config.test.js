@@ -26,3 +26,18 @@ test('BEM: camelCase и одиночное подчёркивание, имен�
   assert.ok(rules.includes('color-named'));
   assert.ok(rules.includes('declaration-no-important'));
 });
+
+test('единицы и цвета: rem для шрифта, отступов и брейкпоинтов, только OKLCH', async () => {
+  const rules = await lint(tailwind, 'units-colors-bad.css');
+  for (const rule of [
+    'declaration-property-unit-disallowed-list', // margin-top: 24px
+    'declaration-property-unit-allowed-list', // font-size/line-height/letter-spacing
+    'media-feature-name-unit-allowed-list', // (width >= 960px)
+    'color-no-hex',
+    'function-disallowed-list', // rgb(), hsl()
+  ]) {
+    assert.ok(rules.includes(rule), rule);
+  }
+  assert.equal(rules.filter((r) => r === 'declaration-property-unit-allowed-list').length, 3);
+  assert.equal(rules.filter((r) => r === 'function-disallowed-list').length, 2);
+});
