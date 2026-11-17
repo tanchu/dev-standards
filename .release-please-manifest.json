@@ -1,5 +1,5 @@
 {
-  "packages/eslint-config": "0.1.0",
+  "packages/eslint-config": "0.1.1",
   "packages/stylelint-config": "0.1.0",
   "packages/tsconfig": "0.1.0",
   "packages/agent-rules": "0.2.0",
