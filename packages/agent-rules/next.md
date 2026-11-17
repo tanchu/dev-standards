@@ -63,7 +63,7 @@ CI всё равно проверит.
 
 Поддерживаемые браузеры — `@tanchu/browserslist-config` (`"browserslist": ["extends
 @tanchu/browserslist-config"]` в `package.json`): минимум Tailwind v4 — Chrome/Edge 111,
-Safari 16.4, Firefox 128 — с мобильными версиями.
+Safari 16.4 — с мобильными версиями; Firefox — от 115 (ESR для Windows 7/8.1).
 API, которого нет хотя бы в одном браузере из списка, включай только с проверкой поддержки
 и рабочим поведением без него (полифилл, подгружаемый только там, где нужен, или упрощённый
 вариант). `eslint-plugin-compat` ловит API из своей базы; совсем новые API он не знает —

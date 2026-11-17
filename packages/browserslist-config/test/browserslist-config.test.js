@@ -17,7 +17,7 @@ test('список разворачивается в реальные верси
   assert.ok(browserslist(config).length > 50);
 });
 
-test('все браузеры списка поддерживают то, на чём держатся стили', () => {
+test('все браузеры списка поддерживают то, без чего ломаются стили', () => {
   for (const feature of ['css-lch-lab', 'css-cascade-layers', 'css-color-function', 'css-media-range-syntax']) {
     assert.deepEqual(unsupported(feature), [], feature);
   }
