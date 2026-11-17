@@ -2,6 +2,6 @@
   "packages/eslint-config": "0.1.0",
   "packages/stylelint-config": "0.1.0",
   "packages/tsconfig": "0.1.0",
-  "packages/agent-rules": "0.1.0",
+  "packages/agent-rules": "0.2.0",
   "packages/browserslist-config": "0.1.0"
 }
