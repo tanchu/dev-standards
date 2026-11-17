@@ -25,7 +25,8 @@ test('ловит нарушения правил стека', async () => {
 
   assert.ok(has('better-tailwindcss/enforce-canonical-classes', 'gap-y-15'), 'gap-y-[60px] → gap-y-15 в константе');
   assert.ok(has('better-tailwindcss/enforce-canonical-classes', 'max-w-300'), 'max-w-[1200px] → max-w-300');
-  assert.ok(has('better-tailwindcss/no-restricted-classes', 'Нечётный размер шрифта'), 'text-[13px]');
+  const oddFonts = messages.filter((m) => m.includes('Нечётный размер шрифта'));
+  assert.equal(oddFonts.length, 2, 'text-[13px] и sm:text-[15px]/[22px] (с межстрочным интервалом)');
   assert.ok(has('better-tailwindcss/no-restricted-classes', 'Брейкпоинт в px'), 'max-[959px]:');
   assert.ok(has('better-tailwindcss/no-restricted-classes', 'Цвет прямо в классе'), 'bg-[#384c3c]');
   assert.ok(has('no-restricted-syntax', 'React.X'), 'React.ReactNode');

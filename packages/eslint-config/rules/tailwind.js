@@ -50,7 +50,8 @@ export function tailwindRules({ ignoreUnknown = [], restrict = [] } = {}) {
           message: 'Брейкпоинт в px: используй именованный из @theme (в rem) или min-[NNrem]: — см. README @tanchu/eslint-config.',
         },
         {
-          pattern: '^(?:.*:)?text-\\[\\d*[13579]px\\]$',
+          // С межстрочным интервалом тоже: `text-[15px]/[22.8px]`.
+          pattern: '^(?:.*:)?text-\\[\\d*[13579]px\\](?:/.+)?$',
           message: 'Нечётный размер шрифта: только чётные (10, 12, 14, 16…) — см. README @tanchu/eslint-config.',
         },
         {
