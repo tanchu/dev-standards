@@ -12,7 +12,11 @@ async function lint(file) {
     overrideConfigFile: true,
     overrideConfig: defineNextConfig({
       tsconfigRootDir: cwd,
-      tailwind: { entryPoint: 'src/app/globals.css', ignoreUnknown: ['^fx-'] },
+      tailwind: {
+        entryPoint: 'src/app/globals.css',
+        ignoreUnknown: ['^fx-'],
+        headingStyles: { className: 'font-heading', file: 'src/components/heading-styles.ts' },
+      },
     }),
   });
   const [result] = await eslint.lintFiles([file]);
@@ -29,6 +33,7 @@ test('ловит нарушения правил стека', async () => {
   assert.equal(oddFonts.length, 2, 'text-[13px] и sm:text-[15px]/[22px] (с межстрочным интервалом)');
   assert.ok(has('better-tailwindcss/no-restricted-classes', 'Брейкпоинт в px'), 'max-[959px]:');
   assert.ok(has('better-tailwindcss/no-restricted-classes', 'Цвет прямо в классе'), 'bg-[#384c3c]');
+  assert.ok(has('better-tailwindcss/no-restricted-classes', 'Шрифт заголовков'), 'font-heading вне файла видов');
   assert.ok(has('no-restricted-syntax', 'React.X'), 'React.ReactNode');
   assert.ok(has('jsx-a11y/alt-text'), '<img> без alt');
   assert.ok(!has('better-tailwindcss/no-unknown-classes'), 'fx-reveal разрешён через ignoreUnknown');
@@ -36,6 +41,10 @@ test('ловит нарушения правил стека', async () => {
 
 test('чистый файл проходит без замечаний', async () => {
   assert.deepEqual(await lint('src/good.tsx'), []);
+});
+
+test('шрифт заголовков разрешён только в файле видов', async () => {
+  assert.deepEqual(await lint('src/components/heading-styles.ts'), []);
 });
 
 test('модули одного маршрута app/ не импортируются из другого', async () => {

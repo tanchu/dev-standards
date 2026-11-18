@@ -7,6 +7,7 @@ export function Bad({ children }: { children: React.ReactNode }) {
     <div className={`${BOX_CLASS} text-[13px] max-[959px]:px-4 fx-reveal bg-[#384c3c]`}>
       <img src="/a.png" />
       <p className="sm:text-[15px]/[22px]">{children}</p>
+      <h2 className="font-heading text-[40px]">{children}</h2>
       {children}
     </div>
   );

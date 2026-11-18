@@ -54,9 +54,11 @@ const REACT_NAMESPACE_SELECTOR = {
  * @param {object} options
  * @param {string} options.tsconfigRootDir Папка с tsconfig.json — передай `import.meta.dirname`.
  * @param {false | { entryPoint: string; rootFontSize?: number; ignoreUnknown?: string[];
- *   restrict?: { pattern: string; message: string }[] }} [options.tailwind]
+ *   restrict?: { pattern: string; message: string }[];
+ *   headingStyles?: { className: string; file: string } }} [options.tailwind]
  *   Tailwind CSS v4: путь к CSS с `@import "tailwindcss"`, собственные классы проекта
- *   (`ignoreUnknown`, регулярки) и дополнительные запреты. `false` — проект без Tailwind.
+ *   (`ignoreUnknown`, регулярки) и дополнительные запреты. `headingStyles` — класс шрифта
+ *   заголовков и файл с их видами: вне этого файла класс запрещён. `false` — проект без Tailwind.
  * @param {boolean} [options.payload] Проект с Payload CMS: не проверять сгенерированные файлы.
  * @param {string} [options.srcDir] Папка исходников с алиасом `@/*` (по умолчанию `src`).
  * @param {string[]} [options.ignores] Дополнительные глобальные исключения.
@@ -172,6 +174,14 @@ export function defineNextConfig({
       files: [`${srcDir}/**/*.{js,jsx,mjs,cjs,ts,tsx}`],
       rules: { 'no-restricted-syntax': ['error', REACT_NAMESPACE_SELECTOR, ...relativeReexportSelectors] },
     },
+    // Файл видов заголовков — единственное место, где можно писать класс шрифта заголовков.
+    ...(tailwind && tailwind.headingStyles ? [{
+      files: [tailwind.headingStyles.file],
+      rules: {
+        'better-tailwindcss/no-restricted-classes':
+          tailwindRules({ ...tailwind, headingStyles: undefined })['better-tailwindcss/no-restricted-classes'],
+      },
+    }] : []),
     // Конфиги экосистемы ESLint намеренно реэкспортируют default — это не ошибка.
     {
       files: ['eslint.config.mjs'],

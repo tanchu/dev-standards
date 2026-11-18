@@ -28,9 +28,27 @@ export function tailwindSettings({ entryPoint, rootFontSize = 16 }) {
 }
 
 /**
- * @param {{ ignoreUnknown?: string[]; restrict?: { pattern: string; message: string }[] }} options
+ * Запрет класса шрифта заголовков (например, `font-heading`) везде, кроме файла видов заголовков:
+ * размер, интерлиньяж и начертание заголовка берутся только из готовых видов.
+ *
+ * @param {{ className: string; file: string } | undefined} headingStyles
  */
-export function tailwindRules({ ignoreUnknown = [], restrict = [] } = {}) {
+function headingRestriction(headingStyles) {
+  if (headingStyles === undefined) {
+    return [];
+  }
+  const escaped = headingStyles.className.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return [{
+    pattern: `^(?:.*:)?${escaped}$`,
+    message: `Шрифт заголовков — только через вид из ${headingStyles.file}: новых размеров не заводим — см. README @tanchu/eslint-config.`,
+  }];
+}
+
+/**
+ * @param {{ ignoreUnknown?: string[]; restrict?: { pattern: string; message: string }[];
+ *   headingStyles?: { className: string; file: string } }} options
+ */
+export function tailwindRules({ ignoreUnknown = [], restrict = [], headingStyles } = {}) {
   return {
     ...betterTailwindcss.configs.recommended.rules,
     // Переносы — только в атрибутах и вызовах (className, cn(…)): в константах строки в
@@ -59,6 +77,7 @@ export function tailwindRules({ ignoreUnknown = [], restrict = [] } = {}) {
           pattern: '\\[(?:color:)?(?:#[0-9a-fA-F]{3,8}|(?:rgba?|hsla?|hwb|lab|lch|oklab)\\()',
           message: 'Цвет прямо в классе: заведи токен в @theme (OKLCH) и используй его — см. README @tanchu/eslint-config.',
         },
+        ...headingRestriction(headingStyles),
         ...restrict,
       ],
     }],
