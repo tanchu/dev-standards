@@ -27,8 +27,9 @@ export default {
     'no-invalid-position-declaration': [true, { ignoreAtRules: ['utility', 'variant', 'custom-variant'] }],
     // `@import "tailwindcss"` пишется строкой — так в документации Tailwind.
     'import-notation': 'string',
-    // Переменные `@theme` (`--color-accent`, `--breakpoint-laptop`) — в kebab-case.
-    'custom-property-pattern': ['^[a-z][a-z0-9]*(-[a-z0-9]+)*$', {
+    // Переменные `@theme` (`--color-accent`, `--breakpoint-laptop`) — в kebab-case;
+    // `--text-*: initial` сбрасывает размеры Tailwind по умолчанию, чтобы остались токены проекта.
+    'custom-property-pattern': ['^[a-z][a-z0-9]*(-[a-z0-9]+)*(-\\*)?$', {
       message: 'CSS-переменная в kebab-case: --color-accent, --breakpoint-laptop',
     }],
   },
