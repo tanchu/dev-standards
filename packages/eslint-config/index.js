@@ -9,6 +9,7 @@ import jsxA11y from 'eslint-plugin-jsx-a11y';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import { relativeReexportSelectors, structureConfigs } from './rules/structure.js';
 import { stylisticRules } from './rules/stylistic.js';
 import { betterTailwindcss, tailwindRules, tailwindSettings } from './rules/tailwind.js';
 
@@ -41,6 +42,11 @@ const nextRules = {
 };
 
 const browserAndNodeGlobals = { ...globals.browser, ...globals.node };
+
+const REACT_NAMESPACE_SELECTOR = {
+  selector: "TSQualifiedName[left.name='React']",
+  message: 'Импортируй тип напрямую (`import type { X } from \'react\'`), не используй `React.X`.',
+};
 
 /**
  * Общий ESLint-конфиг для проекта на Next.js + React + TypeScript.
@@ -135,10 +141,7 @@ export function defineNextConfig({
         '@eslint-react/dom-no-missing-button-type': 'off',
         // React-типы импортируем напрямую (`import type { ReactNode } from 'react'`),
         // не через `React.ReactNode`.
-        'no-restricted-syntax': ['error', {
-          selector: "TSQualifiedName[left.name='React']",
-          message: 'Импортируй тип напрямую (`import type { X } from \'react\'`), не используй `React.X`.',
-        }],
+        'no-restricted-syntax': ['error', REACT_NAMESPACE_SELECTOR],
       },
     },
     // Доступность разметки (WCAG 2.2 AA): строгий набор jsx-a11y.
@@ -160,6 +163,14 @@ export function defineNextConfig({
           createTypeScriptImportResolver({ alwaysTryTypes: true, project: './tsconfig.json' }),
         ],
       },
+    },
+    // Структура: слои, модули страниц только для своей страницы, импорты только через `@/`
+    // (rules/structure.js). `no-restricted-syntax` собираем целиком: ESLint не складывает
+    // настройки правила из разных блоков.
+    ...structureConfigs({ rootDir: tsconfigRootDir, srcDir }),
+    {
+      files: [`${srcDir}/**/*.{js,jsx,mjs,cjs,ts,tsx}`],
+      rules: { 'no-restricted-syntax': ['error', REACT_NAMESPACE_SELECTOR, ...relativeReexportSelectors] },
     },
     // Конфиги экосистемы ESLint намеренно реэкспортируют default — это не ошибка.
     {
