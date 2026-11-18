@@ -1,9 +1,10 @@
 {
   "name": "@tanchu/agent-rules",
   "version": "0.3.0",
-  "description": "Общие правила разработки для агентов (Claude Code и др.) в проектах tanchu на Next.js.",
+  "description": "Общие правила разработки для агентов (Claude Code, Codex и др.) в проектах tanchu: Next.js и бэкенд (Workers, Node.js).",
   "files": [
     "next.md",
+    "backend.md",
     "README.md"
   ],
   "license": "MIT",
@@ -16,7 +17,10 @@
     "claude-code",
     "agents",
     "nextjs",
-    "conventions"
+    "conventions",
+    "codex",
+    "cloudflare-workers",
+    "nodejs"
   ],
   "publishConfig": {
     "access": "public",
