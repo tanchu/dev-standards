@@ -1,6 +1,6 @@
 {
   "name": "@tanchu/eslint-config",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Общий ESLint-конфиг проектов tanchu: Next.js + React + TypeScript + Tailwind CSS v4, доступность (WCAG 2.2 AA), совместимость с browserslist.",
   "type": "module",
   "exports": {
