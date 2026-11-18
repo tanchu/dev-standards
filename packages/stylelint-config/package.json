@@ -1,6 +1,6 @@
 {
   "name": "@tanchu/stylelint-config",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Общий stylelint-конфиг проектов tanchu: вариант для Tailwind CSS v4 и вариант с BEM для проектов на обычном CSS / CSS Modules.",
   "type": "module",
   "exports": {
@@ -20,7 +20,13 @@
     "url": "git+https://github.com/tanchu/dev-standards.git",
     "directory": "packages/stylelint-config"
   },
-  "keywords": ["stylelint", "stylelint-config", "tailwindcss", "bem", "css-modules"],
+  "keywords": [
+    "stylelint",
+    "stylelint-config",
+    "tailwindcss",
+    "bem",
+    "css-modules"
+  ],
   "publishConfig": {
     "access": "public",
     "provenance": true
