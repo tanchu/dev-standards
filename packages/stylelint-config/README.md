@@ -8,10 +8,13 @@
 | `@tanchu/stylelint-config/bem` | проекты без Tailwind: обычный CSS или CSS Modules | BEM в kebab-case: `block`, `block__element`, `block--modifier` |
 
 Общее для обоих: `stylelint-config-standard`, без именованных цветов (`red`, `white`) и
-`!important`, вложенность не глубже 3, без селекторов по `id`.
+`!important`, вложенность не глубже 3, без селекторов по `id`. Размер текста — только
+переменная темы проекта: `font-size: var(--text-small)`, а не `font-size: 0.875rem`; новые
+токены заводит владелец (правило для агентов — `@tanchu/agent-rules`).
 
 - **Tailwind v4**: разрешены `@theme`, `@utility`, `@variant`, `@custom-variant`,
-  `@apply`, `@reference`, `@source`, `@plugin`, `@config` и функции `--theme()`,
+  `@apply`, `@reference`, `@source`, `@plugin`, `@config` (с вложенными `&:hover` и `@media`
+  внутри `@utility`) и функции `--theme()`,
   `--spacing()`, `--alpha()`; переменные `@theme` — в kebab-case.
 - **BEM**: в CSS Modules блок — сам модуль (`fab.module.css`): `.fab`, `.fab__icon`,
   `.fab--open`. Поддерживаются `:global(...)`, `composes`, `@value`.

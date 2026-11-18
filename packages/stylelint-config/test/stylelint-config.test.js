@@ -32,6 +32,7 @@ test('единицы и цвета: rem для шрифта, отступов и
   for (const rule of [
     'declaration-property-unit-disallowed-list', // margin-top: 24px
     'declaration-property-unit-allowed-list', // font-size/line-height/letter-spacing
+    'declaration-property-value-allowed-list', // font-size не из переменной
     'media-feature-name-unit-allowed-list', // (width >= 960px)
     'color-no-hex',
     'function-disallowed-list', // rgb(), hsl()

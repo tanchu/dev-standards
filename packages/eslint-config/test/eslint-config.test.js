@@ -25,8 +25,10 @@ test('ловит нарушения правил стека', async () => {
 
   assert.ok(has('better-tailwindcss/enforce-canonical-classes', 'gap-y-15'), 'gap-y-[60px] → gap-y-15 в константе');
   assert.ok(has('better-tailwindcss/enforce-canonical-classes', 'max-w-300'), 'max-w-[1200px] → max-w-300');
-  const oddFonts = messages.filter((m) => m.includes('Нечётный размер шрифта'));
-  assert.equal(oddFonts.length, 2, 'text-[13px] и sm:text-[15px]/[22px] (с межстрочным интервалом)');
+  const textSizes = messages.filter((m) => m.includes('Размер текста не из токенов'));
+  assert.equal(textSizes.length, 4, 'text-[13px], sm:text-[15px]/[22px], text-[2.5rem], text-[0.8125rem]');
+  const pxSizes = messages.filter((m) => m.includes('Размер в px'));
+  assert.ok(pxSizes.length >= 2, 'py-[clamp(20px,…)] и text-[13px]');
   assert.ok(has('better-tailwindcss/no-restricted-classes', 'Брейкпоинт в px'), 'max-[959px]:');
   assert.ok(has('better-tailwindcss/no-restricted-classes', 'Цвет прямо в классе'), 'bg-[#384c3c]');
   assert.ok(has('no-restricted-syntax', 'React.X'), 'React.ReactNode');

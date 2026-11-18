@@ -33,6 +33,11 @@ export default {
       'line-height': [],
       'letter-spacing': ['em'],
     }, { message: (property, unit) => `${property} в ${unit}: размер шрифта — rem, межбуквенный интервал — em, межстрочный — без единиц` }],
+    // Размер текста — только переменная темы проекта (`var(--text-body)`): у каждого проекта
+    // свой набор размеров в `@theme`, новые размеры заводит владелец, а не код по месту.
+    'declaration-property-value-allowed-list': [{
+      'font-size': ['/^var\\(--/', 'inherit'],
+    }, { message: 'Размер текста не из токенов: font-size: var(--text-…) из темы проекта; новый токен — только с согласия владельца' }],
     'declaration-property-unit-disallowed-list': [{
       '/^(margin|padding|gap|row-gap|column-gap|inset)/': ['px'],
     }, { message: (property) => `${property} в px: отступы — в rem` }],
