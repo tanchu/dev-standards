@@ -1,6 +1,6 @@
 {
   "name": "@tanchu/agent-rules",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Общие правила разработки для агентов (Claude Code, Codex и др.) в проектах tanchu: Next.js, Cloudflare Workers, Node.js.",
   "files": [
     "next.md",

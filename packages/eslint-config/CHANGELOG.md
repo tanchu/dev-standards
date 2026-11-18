@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.0.0](https://github.com/tanchu/dev-standards/compare/eslint-config-v0.2.0...eslint-config-v1.0.0) (2026-11-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* проекты с произвольными размерами текста (text-[…], font-size: 0.875rem) не проходят lint, пока размеры не заведены токенами темы.
+
+### Features
+
+* **eslint-config:** defineBackendConfig для Cloudflare Workers и Node.js ([186510a](https://github.com/tanchu/dev-standards/commit/186510a88f0038d132c216b2499959efd912b78c))
+* размеры текста только из токенов темы, размеры в rem ([#7](https://github.com/tanchu/dev-standards/issues/7)) ([f6c08fe](https://github.com/tanchu/dev-standards/commit/f6c08fe031d4e2cfa627e923bcdd507f769690ac))
+* стандарты бэкенда — Cloudflare Workers и Node.js ([506176f](https://github.com/tanchu/dev-standards/commit/506176fd8e25c665ff115a9956da1a7c6221d9c6))
+
 ## [0.2.0](https://github.com/tanchu/dev-standards/compare/eslint-config-v0.1.1...eslint-config-v0.2.0) (2026-11-18)
 
 
