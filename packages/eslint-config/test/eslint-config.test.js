@@ -12,11 +12,7 @@ async function lint(file) {
     overrideConfigFile: true,
     overrideConfig: defineNextConfig({
       tsconfigRootDir: cwd,
-      tailwind: {
-        entryPoint: 'src/app/globals.css',
-        ignoreUnknown: ['^fx-'],
-        headingStyles: { className: 'font-heading', file: 'src/components/heading-styles.ts' },
-      },
+      tailwind: { entryPoint: 'src/app/globals.css', ignoreUnknown: ['^fx-'] },
     }),
   });
   const [result] = await eslint.lintFiles([file]);
@@ -29,13 +25,12 @@ test('ловит нарушения правил стека', async () => {
 
   assert.ok(has('better-tailwindcss/enforce-canonical-classes', 'gap-y-15'), 'gap-y-[60px] → gap-y-15 в константе');
   assert.ok(has('better-tailwindcss/enforce-canonical-classes', 'max-w-300'), 'max-w-[1200px] → max-w-300');
-  const oddFonts = messages.filter((m) => m.includes('Нечётный размер шрифта'));
-  assert.equal(oddFonts.length, 3, 'text-[13px], sm:text-[15px]/[22px] (с межстрочным интервалом) и text-[0.8125rem]');
+  const textSizes = messages.filter((m) => m.includes('Размер текста не из токенов'));
+  assert.equal(textSizes.length, 4, 'text-[13px], sm:text-[15px]/[22px], text-[2.5rem], text-[0.8125rem]');
   const pxSizes = messages.filter((m) => m.includes('Размер в px'));
   assert.ok(pxSizes.length >= 2, 'py-[clamp(20px,…)] и text-[13px]');
   assert.ok(has('better-tailwindcss/no-restricted-classes', 'Брейкпоинт в px'), 'max-[959px]:');
   assert.ok(has('better-tailwindcss/no-restricted-classes', 'Цвет прямо в классе'), 'bg-[#384c3c]');
-  assert.ok(has('better-tailwindcss/no-restricted-classes', 'Шрифт заголовков'), 'font-heading вне файла видов');
   assert.ok(has('no-restricted-syntax', 'React.X'), 'React.ReactNode');
   assert.ok(has('jsx-a11y/alt-text'), '<img> без alt');
   assert.ok(!has('better-tailwindcss/no-unknown-classes'), 'fx-reveal разрешён через ignoreUnknown');
@@ -43,10 +38,6 @@ test('ловит нарушения правил стека', async () => {
 
 test('чистый файл проходит без замечаний', async () => {
   assert.deepEqual(await lint('src/good.tsx'), []);
-});
-
-test('шрифт заголовков разрешён только в файле видов', async () => {
-  assert.deepEqual(await lint('src/components/heading-styles.ts'), []);
 });
 
 test('модули одного маршрута app/ не импортируются из другого', async () => {

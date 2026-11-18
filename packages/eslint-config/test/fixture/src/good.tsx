@@ -8,7 +8,7 @@ export function Good({ children }: { children: ReactNode }) {
       className={`
         ${BOX_CLASS}
         fx-reveal w-[1.5px] rounded-[18px] py-[clamp(1.25rem,2vw,2rem)]
-        text-[0.875rem]
+        text-small
         max-laptop:px-4
       `}
     >

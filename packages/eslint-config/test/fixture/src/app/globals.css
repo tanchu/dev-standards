@@ -3,6 +3,7 @@
 @theme {
   --breakpoint-laptop: 60rem;
   --font-heading: Georgia, serif;
+  --text-small: 0.875rem;
 }
 
 .fx-reveal {

@@ -28,27 +28,9 @@ export function tailwindSettings({ entryPoint, rootFontSize = 16 }) {
 }
 
 /**
- * Запрет класса шрифта заголовков (например, `font-heading`) везде, кроме файла видов заголовков:
- * размер, интерлиньяж и начертание заголовка берутся только из готовых видов.
- *
- * @param {{ className: string; file: string } | undefined} headingStyles
+ * @param {{ ignoreUnknown?: string[]; restrict?: { pattern: string; message: string }[] }} options
  */
-function headingRestriction(headingStyles) {
-  if (headingStyles === undefined) {
-    return [];
-  }
-  const escaped = headingStyles.className.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return [{
-    pattern: `^(?:.*:)?${escaped}$`,
-    message: `Шрифт заголовков — только через вид из ${headingStyles.file}: новых размеров не заводим — см. README @tanchu/eslint-config.`,
-  }];
-}
-
-/**
- * @param {{ ignoreUnknown?: string[]; restrict?: { pattern: string; message: string }[];
- *   headingStyles?: { className: string; file: string } }} options
- */
-export function tailwindRules({ ignoreUnknown = [], restrict = [], headingStyles } = {}) {
+export function tailwindRules({ ignoreUnknown = [], restrict = [] } = {}) {
   return {
     ...betterTailwindcss.configs.recommended.rules,
     // Переносы — только в атрибутах и вызовах (className, cn(…)): в константах строки в
@@ -68,10 +50,11 @@ export function tailwindRules({ ignoreUnknown = [], restrict = [], headingStyles
           message: 'Брейкпоинт в px: используй именованный из @theme (в rem) или min-[NNrem]: — см. README @tanchu/eslint-config.',
         },
         {
-          // С межстрочным интервалом тоже: `text-[15px]/[22.8px]`. В rem нечётный кегль
-          // (13px = 0.8125rem) — всегда четыре знака после точки с пятёркой в конце.
-          pattern: '^(?:.*:)?text-\\[(?:\\d*[13579]px|\\d*\\.\\d{3}5rem)\\](?:/.+)?$',
-          message: 'Нечётный размер шрифта: только чётные (10, 12, 14, 16…) — см. README @tanchu/eslint-config.',
+          // Размер текста — только токен темы проекта (`text-body`, `text-(--lead-size)`), не
+          // произвольное значение: у каждого проекта свой набор размеров в `@theme`, новые
+          // размеры заводит владелец. С межстрочным интервалом тоже: `text-[15px]/[22px]`.
+          pattern: '^(?:.*:)?text-\\[(?:length:)?(?:[\\d.]|(?:clamp|min|max|calc)\\()',
+          message: 'Размер текста не из токенов: используй размер из @theme проекта (text-body, text-lead…); новый токен — только с согласия владельца — см. README @tanchu/eslint-config.',
         },
         {
           // Размеры в произвольных значениях — в rem: вёрстка масштабируется вместе с
@@ -86,7 +69,6 @@ export function tailwindRules({ ignoreUnknown = [], restrict = [], headingStyles
           pattern: '\\[(?:color:)?(?:#[0-9a-fA-F]{3,8}|(?:rgba?|hsla?|hwb|lab|lch|oklab)\\()',
           message: 'Цвет прямо в классе: заведи токен в @theme (OKLCH) и используй его — см. README @tanchu/eslint-config.',
         },
-        ...headingRestriction(headingStyles),
         ...restrict,
       ],
     }],

@@ -13,10 +13,8 @@
   - классы только из шкалы: `gap-y-15`, а не `gap-y-[60px]` (исправляется `eslint --fix`);
   - брейкпоинты только в rem — именованные из `@theme` или `min-[NNrem]:`. Брейкпоинты в px запрещены: Tailwind сортирует px и rem не по значению, и `sm:grid-cols-2` перебивает соседний `min-[960px]:grid-cols-3` ([tailwindlabs/tailwindcss#20032](https://github.com/tailwindlabs/tailwindcss/issues/20032));
   - размеры в произвольных значениях — в rem: `text-[0.75rem]`, `py-[clamp(1.25rem,2vw,2rem)]`, а не px (вёрстка масштабируется вместе с размером шрифта в браузере); px — только для тени, скругления, рамки и линий тоньше 2px;
-  - размер шрифта только чётный: `text-[0.75rem]` (12px), не `text-[0.8125rem]` (13px) и не `text-[13px]`;
+  - размер текста — только токен темы проекта (`text-small`, `text-body` из `@theme`), а не произвольное значение `text-[0.875rem]` или `text-[clamp(…)]`: у каждого проекта свой набор размеров, новые заводит владелец (правило для агентов — `@tanchu/agent-rules`);
   - цвета только токенами `@theme` (в OKLCH), не прямо в классе: `bg-accent`, не `bg-[#384c3c]`;
-  - шрифт заголовков (опция `headingStyles`) — только в файле видов заголовков: остальной код берёт
-    готовый вид (`headingStyles('section')`) и не заводит новых размеров;
   - проверяются не только `className` и `cn(…)`, но и константы `*_CLASS`, `*_CLASSES`, `*_SIZE`, `*_COLOR`, `*_STYLE(S)`, включая значения объектов-словарей.
 - Компонент длиннее 300 строк — предупреждение.
 - **Структура проекта** (схема — в `@tanchu/agent-rules`, раздел «Структура»):
@@ -49,8 +47,6 @@ export default defineNextConfig({
     entryPoint: 'src/app/globals.css',
     // Собственные классы из CSS, которых нет в Tailwind (регулярки).
     ignoreUnknown: ['^mm-'],
-    // Класс шрифта заголовков разрешён только в файле с их видами.
-    headingStyles: { className: 'font-heading', file: 'src/components/heading-styles.ts' },
   },
   // Проект с Payload CMS: не проверять сгенерированные файлы.
   payload: true,
