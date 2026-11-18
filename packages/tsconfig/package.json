@@ -1,13 +1,17 @@
 {
   "name": "@tanchu/tsconfig",
   "version": "0.1.0",
-  "description": "Общие настройки TypeScript для проектов tanchu на Next.js.",
+  "description": "Общие настройки TypeScript для проектов tanchu: Next.js, Cloudflare Workers, Node.js.",
   "files": [
     "next.json",
+    "worker.json",
+    "node.json",
     "README.md"
   ],
   "exports": {
-    "./next.json": "./next.json"
+    "./next.json": "./next.json",
+    "./worker.json": "./worker.json",
+    "./node.json": "./node.json"
   },
   "license": "MIT",
   "repository": {
@@ -15,7 +19,13 @@
     "url": "git+https://github.com/tanchu/dev-standards.git",
     "directory": "packages/tsconfig"
   },
-  "keywords": ["tsconfig", "typescript", "nextjs"],
+  "keywords": [
+    "tsconfig",
+    "typescript",
+    "nextjs",
+    "cloudflare-workers",
+    "nodejs"
+  ],
   "publishConfig": {
     "access": "public",
     "provenance": true
