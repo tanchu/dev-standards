@@ -12,7 +12,7 @@ TypeScript, общий CI и правила разработки для аген
 | stylelint (Tailwind v4 или BEM) | [`@tanchu/stylelint-config`](packages/stylelint-config) | `extends: ['@tanchu/stylelint-config/tailwind']` |
 | TypeScript | [`@tanchu/tsconfig`](packages/tsconfig) | `"extends": "@tanchu/tsconfig/next.json"` (`worker.json`, `node.json`) |
 | Поддерживаемые браузеры | [`@tanchu/browserslist-config`](packages/browserslist-config) | `"browserslist": ["extends @tanchu/browserslist-config"]` |
-| Правила для агентов | [`@tanchu/agent-rules`](packages/agent-rules) | `@node_modules/@tanchu/agent-rules/next.md` (`backend.md`) в `CLAUDE.md`; для Codex — ссылка в `AGENTS.md` |
+| Правила для агентов | [`@tanchu/agent-rules`](packages/agent-rules) | `next.md`, или `backend.md` + `worker.md`/`node.md` — через `@node_modules/…` в `CLAUDE.md`; для Codex — ссылка в начале `AGENTS.md` |
 | CI проекта (Next или бэкенд) | [`next-ci.yml`](.github/workflows/next-ci.yml) | `uses: tanchu/dev-standards/.github/workflows/next-ci.yml@main`; бэкенду — `with: { e2e: false }` |
 
 Сервер, порты, домены и деплой — в приватном репозитории `tanchu/infra`, не здесь: этот

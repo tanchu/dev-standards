@@ -1,12 +1,18 @@
 {
   "name": "@tanchu/agent-rules",
   "version": "0.3.0",
-  "description": "Общие правила разработки для агентов (Claude Code, Codex и др.) в проектах tanchu: Next.js и бэкенд (Workers, Node.js).",
+  "description": "Общие правила разработки для агентов (Claude Code, Codex и др.) в проектах tanchu: Next.js, Cloudflare Workers, Node.js.",
   "files": [
     "next.md",
     "backend.md",
+    "worker.md",
+    "node.md",
+    "bin/*.mjs",
     "README.md"
   ],
+  "bin": {
+    "tanchu-strict-baseline": "./bin/strict-baseline.mjs"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
