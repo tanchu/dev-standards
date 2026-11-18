@@ -55,6 +55,33 @@ export default defineNextConfig({
 });
 ```
 
+## Бэкенд: Cloudflare Worker и Node.js
+
+```js
+// eslint.config.mjs
+import { defineBackendConfig } from '@tanchu/eslint-config/backend';
+
+export default defineBackendConfig({
+  tsconfigRootDir: import.meta.dirname,
+  runtime: 'worker', // или 'node'
+  // node: где можно читать process.env (по умолчанию src/config/env.ts)
+  // envFiles: ['src/config/env.ts'],
+});
+```
+
+Что сверх общего форматирования и импортов:
+
+- `typescript-eslint` **strict-type-checked**: `no-unsafe-*`, `no-floating-promises`,
+  `no-misused-promises`, `only-throw-error`, `switch-exhaustiveness-check`,
+  `strict-boolean-expressions`;
+- **без лазеек**: `any`, `as X` (кроме `as const`), `!`, `@ts-ignore` — ошибка;
+  `@ts-expect-error` — только с описанием; неиспользуемый `eslint-disable` — ошибка;
+- пустой `catch` — ошибка, `catch` получает `unknown`;
+- экспортируемые функции — с явным типом результата;
+- Worker: `process.env` запрещён (только `env` из биндингов), глобалы — Service Worker;
+- Node: `process.env` — только в модуле конфигурации, встроенные модули — только `node:*`;
+- в тестах (`*.test.ts`, `test/`) разрешены `as` и `!` для заглушек.
+
 ## Обновления
 
 Правила меняются только новой версией пакета (changelog — в GitHub Releases репозитория).

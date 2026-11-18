@@ -1,17 +1,19 @@
 # dev-standards
 
-Общие стандарты проектов tanchu на **Next.js + React + TypeScript**: конфиги линтеров и
+Общие стандарты проектов tanchu на **Next.js + React + TypeScript** и бэкенда
+(**Cloudflare Workers**, **Node.js**): конфиги линтеров и
 TypeScript, общий CI и правила разработки для агентов. Цель — правило, появившееся в одном
 проекте, одной правкой здесь доходит до всех остальных.
 
 | Что | Где | Как подключить |
 |---|---|---|
 | ESLint (Next, React, TS, Tailwind v4, a11y, browserslist) | [`@tanchu/eslint-config`](packages/eslint-config) | `defineNextConfig({...})` в `eslint.config.mjs` |
+| ESLint для бэкенда (Workers, Node) | [`@tanchu/eslint-config/backend`](packages/eslint-config#бэкенд-cloudflare-worker-и-nodejs) | `defineBackendConfig({ runtime: 'worker' })` в `eslint.config.mjs` |
 | stylelint (Tailwind v4 или BEM) | [`@tanchu/stylelint-config`](packages/stylelint-config) | `extends: ['@tanchu/stylelint-config/tailwind']` |
-| TypeScript | [`@tanchu/tsconfig`](packages/tsconfig) | `"extends": "@tanchu/tsconfig/next.json"` |
+| TypeScript | [`@tanchu/tsconfig`](packages/tsconfig) | `"extends": "@tanchu/tsconfig/next.json"` (`worker.json`, `node.json`) |
 | Поддерживаемые браузеры | [`@tanchu/browserslist-config`](packages/browserslist-config) | `"browserslist": ["extends @tanchu/browserslist-config"]` |
-| Правила для агентов | [`@tanchu/agent-rules`](packages/agent-rules) | `@node_modules/@tanchu/agent-rules/next.md` в `CLAUDE.md` |
-| CI проекта на Next | [`next-ci.yml`](.github/workflows/next-ci.yml) | `uses: tanchu/dev-standards/.github/workflows/next-ci.yml@main` |
+| Правила для агентов | [`@tanchu/agent-rules`](packages/agent-rules) | `next.md`, или `backend.md` + `worker.md`/`node.md` — через `@node_modules/…` в `CLAUDE.md`; для Codex — ссылка в начале `AGENTS.md` |
+| CI проекта (Next или бэкенд) | [`next-ci.yml`](.github/workflows/next-ci.yml) | `uses: tanchu/dev-standards/.github/workflows/next-ci.yml@main`; бэкенду — `with: { e2e: false }` |
 
 Сервер, порты, домены и деплой — в приватном репозитории `tanchu/infra`, не здесь: этот
 репозиторий публичный.
