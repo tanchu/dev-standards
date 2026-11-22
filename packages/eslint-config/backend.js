@@ -27,7 +27,9 @@ const importRules = {
       'newlines-between': 'never',
     },
   ],
-  'import-x/no-cycle': ['error', { maxDepth: 4 }],
+  // Без maxDepth: с лимитом 4 цикл из 6+ файлов проходил незамеченным, а полный обход
+  // стоит ~4% времени lint. Циклы только через `import type` правило не считает.
+  'import-x/no-cycle': 'error',
 };
 
 /**
