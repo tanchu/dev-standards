@@ -85,3 +85,9 @@ test('без Tailwind правила Tailwind не подключаются', ()
 test('требует tsconfigRootDir', () => {
   assert.throws(() => defineNextConfig({}), /tsconfigRootDir/);
 });
+
+test('import-x/no-cycle: ловит длинные циклы и не трогает циклы только по типам', async () => {
+  const long = await lint('src/lib/cycle/step1.ts');
+  assert.ok(long.some((m) => m.startsWith('import-x/no-cycle')), `цикл из 6 файлов: ${long.join('\n')}`);
+  assert.deepEqual(await lint('src/lib/cycle/type-first.ts'), [], 'import type в итоговый JS не попадает');
+});
